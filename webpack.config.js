@@ -10,10 +10,10 @@ module.exports = {
   output: {
     path: __dirname + '/dist/',
     publicPath: 'http://dev-webpack:8080/',
-    filename: 'app.js',
+    filename: 'js/app.js',
   },
   plugins: [
-    new ExtractTextPlugin('app.css'),
+    new ExtractTextPlugin('css/app.css'),
     new BrowserSyncPlugin(
       {
         host: 'localhost',
