@@ -1,5 +1,7 @@
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin'),
-    ExtractTextPlugin = require("extract-text-webpack-plugin");
+ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+var url = require('url');
 
 module.exports = {
   context: __dirname + '/app',
@@ -18,7 +20,9 @@ module.exports = {
       {
         host: 'localhost',
         port: 3000,
-        proxy: 'http://dev-webpack:8080/',
+        proxy: {
+          target: 'http://dev-webpack:8080',
+        }
       },
       {
         reload: true,
@@ -26,20 +30,18 @@ module.exports = {
     )
   ],
   devSever: {
+    historyApiFallback: true,
     contentBase: __dirname + '/dist/',
     host: 'dev-webpack',
-    port: 8080,
+    port: 8080
   },
+  devtool: 'source-map',
   module: {
     loaders: [
       {
         test: /\.js[x]?$/,
         exclude: /(node_modules|bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['es2015', 'react'],
-          plugins: ['transform-runtime'],
-        },
+        loader: 'babel-loader'
       },
       {
         test: /\.scss$/,
@@ -59,7 +61,7 @@ module.exports = {
     ]
   },
   resolve: {
-    modulesDirectories: ['node_modules', './app'],
+    modulesDirectories: ['node_modules', './app', './app/components'],
     extensions: ['', '.js', '.jsx']
   }
 };
